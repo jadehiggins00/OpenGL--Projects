@@ -111,14 +111,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>B:\Downloads\OpenGL-Projects\First-OGL-Project\Libraries\include\GLFW;B:\Downloads\OpenGL-Projects\First-OGL-Project\Libraries\include\glew\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>B:\Downloads\OpenGL-Projects\OpenGL--Projects\First-OGL-Project\Libraries\include\glew\glew-2.1.0\include\GL;B:\Downloads\OpenGL-Projects\OpenGL--Projects\First-OGL-Project\Libraries\include\GLFW;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>B:\Downloads\OpenGL-Projects\First-OGL-Project\Libraries\include\GLFW\lib-vc2022;B:\Downloads\OpenGL-Projects\First-OGL-Project\Libraries\include\glew\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>B:\Downloads\OpenGL-Projects\OpenGL--Projects\First-OGL-Project\Libraries\include\glew\glew-2.1.0\lib\Release\Win32;B:\Downloads\OpenGL-Projects\OpenGL--Projects\First-OGL-Project\Libraries\include\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

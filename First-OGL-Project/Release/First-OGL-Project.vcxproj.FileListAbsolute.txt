@@ -1,1 +1,2 @@
 B:\Downloads\OpenGL-Projects\First-OGL-Project\Release\First-OGL-Project.exe
+B:\Downloads\OpenGL-Projects\OpenGL--Projects\First-OGL-Project\Release\First-OGL-Project.exe
