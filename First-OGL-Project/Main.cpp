@@ -34,13 +34,15 @@ int main() {
     GLfloat points[] = {
         -0.5f, 0.0f, 0.0f,
         -0.5f, -0.8f, 0.0f,
-        0.5f, -0.8f, 0.0f,
+        0.5f, -0.8f, 0.0f
+    };
+
+    // points for second triangle
+    GLfloat points2[] = {
 
         -0.5f, 0.0f, 0.0f,
-         0.5f, -0.8f, 0.0f,
-         0.5f, 0.0f, 0.0f,
-    
-
+        0.5f, -0.8f, 0.0f,
+        0.5f, 0.0f, 0.0f
     };
 
     // we will now copy this chunk of memory onto the graphics card using the vertex buffer unit
@@ -53,6 +55,12 @@ int main() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
     //glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), points, GL_STATIC_DRAW);
 
+    //second VBO-2
+    GLuint vbo2;
+    glGenBuffers(1, &vbo2);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo2);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(points2), points2, GL_STATIC_DRAW);
+
     // we use a vertex attribute object (vao) which is used to remember all the 
     // vertex buffers that you want to use and the memoryy layout of each one.
     // we set up the VAO object once per mesh. when we want to draw, all we do is bind the VAO and draw
@@ -64,6 +72,14 @@ int main() {
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     // this defines the layout of our first VBO 
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    // second vao object 
+    GLuint vao2;
+    glGenVertexArrays(1, &vao2);
+    glBindVertexArray(vao2);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo2);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
     
@@ -81,16 +97,38 @@ int main() {
     glAttachShader(shader_programme, vs);
     glLinkProgram(shader_programme);
 
+    //  ------------- creating another shader programme ----------- 
+    GLuint vs2 = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vs2, 1, &vertex_shader, NULL);
+    glCompileShader(vs2);
+    GLuint fs2 = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fs2, 1, &fragment_shader2, NULL);
+    glCompileShader(fs2);
+    GLuint shader_programme2 = glCreateProgram();
+    glAttachShader(shader_programme2, fs2);
+    glAttachShader(shader_programme2, vs2);
+    glLinkProgram(shader_programme2);
+
+
+    // changing the background color
+    glClearColor(0.6f, 0.6f, 0.8f, 1.0f);
+
     // using a loop to draw!
     while (!glfwWindowShouldClose(window)) {
+
 
         // clear the drawing surface
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(shader_programme); // we set the shader program that should be used for all drawing
         // we set the VAO as the input variables that should be used for all further drawings
+      
         glBindVertexArray(vao);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glUseProgram(shader_programme2);
+        glBindVertexArray(vao2);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         // draw points 0-3 from the currently bound VAO with current in-use shader
-        glDrawArrays(GL_TRIANGLES, 0, 6); 
+        
        
         //glfw3 requires that we update events like input handling - like keypresses
         glfwPollEvents();

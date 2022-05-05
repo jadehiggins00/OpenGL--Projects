@@ -16,3 +16,18 @@ const char* fragment_shader =
 " gl_FragColor = vec4 (0.5, 1.0, 0.9, 1.0);"
 "}";
 
+
+//--------- ------- second vertex shader ---------- -- - - -- - -- -- - -
+const char* vertex_shader2 =
+"#version 120\n" // version of Opengl
+"attribute vec3 vp;"    //has one input vvarr - vec3(vector made up of 3 floats) which matches with VAO attribute pointer
+"void main () {"
+" gl_Position = vec4 (vp.x,vp.y, vp.z, 1.0);"    // the 1.0 - means dont calculate any perspective
+"}";
+
+// second fragment shader
+const char* fragment_shader2 =
+"#version 120\n"
+"void main () {"
+" gl_FragColor = vec4 (0.2, 1.0, 0.5, 1.0);"
+"}";
