@@ -1,8 +1,85 @@
-
+#define _CRT_SECURE_NO_WARNINGS
 #include <glew.h>    /* include GLEW and new version of GL on Windows */
 #include <glfw3.h> /* GLFW helper library */
+
 #include <stdio.h>
+#include <stdarg.h> // for doing gl_log() functions that work like printf()
+#include <time.h>
+
+#define GL_LOG_FILE "gl.log"
 #include "shaders.h"
+
+
+/*
+This function opends the log file and prints the date/time 
+*/
+bool restart_gl_log() {
+
+    FILE* file = fopen(GL_LOG_FILE, "w");
+    if (!file) {
+        fprintf(
+            stderr, "ERROR: could not open GL_LOG_FILE log file %s for writing\n",
+            GL_LOG_FILE
+        );
+        return false;
+    }// end if
+    time_t now = time(NULL);
+    char* date = ctime(&now);
+    fprintf(file, "GL_LOG_FILE LOG. local time %s\n", date);
+    fclose(file);
+    return true;
+
+}//end func
+
+/*
+this is the main log print-out
+the "..." is a part of C's variables format and lets us give any number of parameters.
+*/
+bool gl_log(const char* message, ...) {
+    va_list argptr;
+    FILE* file = fopen(GL_LOG_FILE, "a");
+    if (!file) {
+        fprintf(
+            stderr,"ERROR: could not open GL_LOG_FILE %s file for appending\n",
+            GL_LOG_FILE
+        );
+        return false;
+    }//end if
+    va_start(argptr, message);
+    vfprintf(file, message, argptr);
+    va_end(argptr);
+    fclose(file);
+    return true;
+}// end function
+
+/*
+This is a GL log funciton for Error messages
+*/
+bool gl_log_err(const char* message, ...) {
+    va_list argptr;
+    FILE* file = fopen(GL_LOG_FILE, "a");
+    if (!file) {
+        fprintf(
+            stderr,
+            "ERROR: could not open GL_LOG_FILE %s file for appending\n",
+            GL_LOG_FILE
+        );
+        return false;
+    }//end if
+    va_start(argptr, message);
+    vfprintf(file, message, argptr);
+    va_end(argptr);
+    va_start(argptr, message);
+    vfprintf(file, message, argptr);
+    va_end(argptr);
+
+    fclose(file);
+    return true;
+}// end function
+
+
+
+
 
 int main() {
     GLFWwindow* window = NULL;
