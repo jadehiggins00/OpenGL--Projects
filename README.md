@@ -7,4 +7,4 @@ using OpenGL with C++.
 I made two triangle objects creating a VBO, VAO and shader programme for each. The two triangles 
 having different colours and forming a square. I also changed the background colour.
 
-![An image](images/triangles.png)
+
