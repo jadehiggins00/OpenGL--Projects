@@ -2,6 +2,7 @@
 #include <glew.h>    /* include GLEW and new version of GL on Windows */
 #include <glfw3.h> /* GLFW helper library */
 #include <stdio.h>
+#include "shaders.h"
 
 int main() {
     GLFWwindow* window = NULL;
@@ -31,9 +32,15 @@ int main() {
 
     // points for triangle
     GLfloat points[] = {
-        0.0f, 0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f
+        -0.5f, 0.0f, 0.0f,
+        -0.5f, -0.8f, 0.0f,
+        0.5f, -0.8f, 0.0f,
+
+        -0.5f, 0.0f, 0.0f,
+         0.5f, -0.8f, 0.0f,
+         0.5f, 0.0f, 0.0f,
+    
+
     };
 
     // we will now copy this chunk of memory onto the graphics card using the vertex buffer unit
@@ -59,22 +66,6 @@ int main() {
     // this defines the layout of our first VBO 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    // we use GLSL to define how to draw our shape from the VAO
-    // the shader program is made up of 2 parts: vertex shader - where the 3d points should
-    // end up on the display and a frament shader which colours the surface.
-    const char* vertex_shader =
-        "#version 120\n" // version of Opengl
-        "attribute vec3 vp;"    //has one input vvarr - vec3(vector made up of 3 floats) which matches with VAO attribute pointer
-        "void main () {"
-        " gl_Position = vec4 (vp, 1.0);"    // the 1.0 - means dont calculate any perspective
-        "}";
-
-    // fragment shader
-    const char* fragment_shader = 
-        "#version 120\n"
-        "void main () {"
-        " gl_FragColor = vec4 (0.5, 1.0, 0.9, 1.0);"
-        "}";
     
     // before using shaders we have to load the strings into a GL shader and compile them
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
@@ -99,7 +90,8 @@ int main() {
         // we set the VAO as the input variables that should be used for all further drawings
         glBindVertexArray(vao);
         // draw points 0-3 from the currently bound VAO with current in-use shader
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6); 
+       
         //glfw3 requires that we update events like input handling - like keypresses
         glfwPollEvents();
         // put the stuff we've been drawing onto the display
